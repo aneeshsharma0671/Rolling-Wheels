@@ -14,9 +14,15 @@ public class TrackGeneration : MonoBehaviour
     {
         for (int i = 0; i < number_of_tiles; i++)
         {
-           
-                GenerateTrack();
-            
+           if(i==0)
+            {
+                GenerateTrack(i);
+            }
+            else
+            {
+                GenerateTrack(Random.Range(1, trackprefabs.Length));
+            }
+              
         }
     }
 
@@ -24,15 +30,15 @@ public class TrackGeneration : MonoBehaviour
     {
         if (Wheel.position.z - 100 > Anchor - (number_of_tiles * 100))
         {
-            GenerateTrack();
+            GenerateTrack(Random.Range(1, trackprefabs.Length));
             DestroyTrack();
         }
         
     }
 
-    void GenerateTrack()
+    void GenerateTrack(int TrackIndex)
     {
-        GameObject Track = Instantiate(trackprefabs[0]);
+        GameObject Track = Instantiate(trackprefabs[TrackIndex]);
         Track.transform.position = new Vector3(0,0,Anchor);
         tracks.Add(Track);
         Anchor += 100;
