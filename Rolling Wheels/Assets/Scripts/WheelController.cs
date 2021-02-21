@@ -11,6 +11,7 @@ public class WheelController : MonoBehaviour
     private Rigidbody wheel_rb;
     private CapsuleCollider wheel_collider;
     public GameObject[] wheel_Spokes;
+    public GameObject[] wheel_rims;
     public bool IsPressed = false;
 
     public void Awake()
@@ -22,7 +23,7 @@ public class WheelController : MonoBehaviour
     public void Update()
     {
         wheel_rb.angularVelocity = transform.right * angular_Velocity;
-        Debug.Log(wheel_rb.angularVelocity);
+     //   Debug.Log(wheel_rb.angularVelocity);
     }
 
     public void FixedUpdate()
@@ -30,19 +31,19 @@ public class WheelController : MonoBehaviour
         if(wheel_collider.radius > 1 && !IsPressed)
         {
             wheel_collider.radius -= Time.fixedDeltaTime*radius_multiplier;
-            wheel_Spokes[0].transform.localScale = new Vector3(0.25f, (wheel_collider.radius - 1) / 2, 0.25f);
-            wheel_Spokes[1].transform.localScale = new Vector3(0.25f, (wheel_collider.radius - 1) / 2, 0.25f);
-            wheel_Spokes[2].transform.localScale = new Vector3(0.25f, (wheel_collider.radius - 1) / 2, 0.25f);
-            wheel_Spokes[3].transform.localScale = new Vector3(0.25f, (wheel_collider.radius - 1) / 2, 0.25f);
-
         }
         if (wheel_collider.radius < radius_Limit && IsPressed)
         {
             wheel_collider.radius += Time.fixedDeltaTime*radius_multiplier;
-            wheel_Spokes[0].transform.localScale = new Vector3(0.25f, (wheel_collider.radius - 1) / 2, 0.25f);
-            wheel_Spokes[1].transform.localScale = new Vector3(0.25f, (wheel_collider.radius - 1) / 2, 0.25f);
-            wheel_Spokes[2].transform.localScale = new Vector3(0.25f, (wheel_collider.radius - 1) / 2, 0.25f);
-            wheel_Spokes[3].transform.localScale = new Vector3(0.25f, (wheel_collider.radius - 1) / 2, 0.25f);
+        }
+        if(wheel_collider.radius > 1 || wheel_collider.radius < radius_Limit)
+        for (int i = 0; i < wheel_Spokes.Length; i++)
+        {
+            wheel_Spokes[i].transform.localScale = new Vector3(0.25f, (wheel_collider.radius - 1) / 2, 0.25f);
+        }
+        for (int i = 0; i < wheel_Spokes.Length; i++)
+        {
+            wheel_rims[i].transform.localScale = new Vector3(1 , wheel_collider.radius , wheel_collider.radius);
         }
     }
 

@@ -5,6 +5,7 @@ using UnityEngine;
 public class TrackGeneration : MonoBehaviour
 {
     public GameObject[] trackprefabs;
+    public GameObject track_Parent;
     public List<GameObject> tracks;
     public Transform Wheel;
     private float Anchor = 0;
@@ -38,7 +39,7 @@ public class TrackGeneration : MonoBehaviour
 
     void GenerateTrack(int TrackIndex)
     {
-        GameObject Track = Instantiate(trackprefabs[TrackIndex]);
+        GameObject Track = Instantiate(trackprefabs[TrackIndex],track_Parent.transform);
         Track.transform.position = new Vector3(0,0,Anchor);
         tracks.Add(Track);
         Anchor += 100;
